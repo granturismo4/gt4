@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% if alert_flag %}
+      <script>alert("Sorry, ID is already taken. Please re-submit.")</script>  
+    {% endif %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>GT4</title>
+
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Stylesheet      -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/hipster_cards.css' %}" rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href="{% static 'css/pe-icon-7-stroke.css' %}" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway:700,100,400|Roboto:400,700|Playfair+Display+SC:400,700" rel="stylesheet" type="text/css" />
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">    
+
+    <style type="text/css">
+      .card {
+        max-width: 800px;
+      }
+
+      body {
+        background: #555;
+
+        background: url("{% static 'img/bg.jpg' %}");
+        background-size: cover;
+        height: 100vh;
+        width: 100%;
+
+        background-attachment: fixed;
+        background-size: 100% 100%;
+      }
+
+      .card {
+        box-shadow: -18px 19px 31px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 400;
+        max-width: 220px;
+        margin: 0 auto 10px;
+        line-height: 1.5;
+      }
+
+      .big-title p:first-child {
+        font-family: "Playfair Display", "Helvetica Neue", "Helvetica", "Arial", serif;
+      }
+      .big-title p:last-child {
+        font-family: "Playfair Display", "Helvetica Neue", "Helvetica", "Arial", serif;
+      }
+
+      .page-description,
+      .page-description-footer {
+        text-align: center;
+        color: #eeeeee;
+        font-family: "Raleway", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .page-description-footer {
+        margin-top: 50px;
+        margin-bottom: 20px;
+      }
+      .page-description-footer h2 {
+        margin-top: 60px;
+        padding-bottom: 10px;
+      }
+      .page-description-footer .btn {
+        margin: 0 3px;
+      }
+      .page-description-footer .btn-social i {
+        margin-right: 7px;
+      }
+
+      .page-description-header {
+        height: 70vh;
+      }
+
+      .ct-heart {
+        color: #f74933;
+      }
+      .page-description-footer p {
+        text-align: center;
+        color: #eeeeee;
+        margin-top: 100px;
+      }
+      .page-description-footer a {
+        color: #ffffff;
+      }
+
+      .page-description-footer .social-area {
+        margin: 0 auto;
+      }
+      .page-description-footer > div {
+        display: inline-block;
+      }
+
+      .logo-container {
+        left: 50px;
+        position: absolute;
+        top: 20px;
+        z-index: 3;
+      }
+      .logo-container.full-screen-table-demo {
+        left: 13px;
+        top: 10px;
+      }
+
+      .logo-container .logo {
+        overflow: hidden;
+        border-radius: 50%;
+        border: 1px solid #333333;
+        width: 60px;
+        float: left;
+      }
+      .logo-container .brand {
+        font-size: 18px;
+        color: #ffffff;
+        line-height: 20px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        float: left;
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 60px;
+      }
+      .hipster-container {
+        max-width: 440px;
+        display: block;
+        border-radius: 10px;
+        padding: 20vh 80px;
+        margin: 0 auto;
+      }
+      .hipster-container img {
+        width: 100%;
+      }
+      h2.big-title {
+        font-size: 44px !important;
+        margin-top: 150px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      h1 small {
+        color: #eee;
+      }
+
+      @media (min-width: 979px) {
+        .card {
+          margin-bottom: 70px;
+        }
+      }
+
+      @media (max-width: 979px) {
+        .page-description-footer .btn {
+          margin-bottom: 10px;
+        }
+      }
+
+      .card .header {
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card" style="padding: 50px; margin-top: 50px;">
+      <form id="mintcarForm" method="POST" enctype="multipart/form-data">
+        <!-- Blockchain -->
+        <div class="card-header">
+            <h2 class="card-title text-center">Mint Car</h2>
+            <h4 class="text-center">Blockchain Data</h4>
+            <hr>
+        </div>      
+        <div class="card-body">        
+            {% csrf_token %}       
+            <div class="row">
+                <div class="col-sm-12">
+                <label>Mint To</label>
+                <div class="form-group">
+                    <input name="_to" type="text" class="form-control" placeholder="Ex: hxe7af5fcfd8dfc67530a01a0e403882687528dfcb">
+                </div>
+                </div>
+                <div class="col-sm-6">
+                <label>Car ID</label>
+                <div class="form-group">
+                    <input name="_tokenId" type="text" class="form-control" placeholder="Ex: 3">
+                </div>
+                </div>              
+                <div class="col-sm-6">
+                <label>Manufacturer</label>
+                <div class="form-group">
+                    <input name="_manufacturer" type="text" class="form-control" placeholder="Ex: Toyota">
+                </div>
+                </div>
+                <div class="col-sm-6">
+                <label>Year</label>
+                <div class="form-group">
+                    <input name="_year" type="text" class="form-control" placeholder="Ex: 1995">
+                </div>
+                </div>
+                <div class="col-sm-6">
+                <label>Model</label>
+                <div class="form-group">
+                    <input name="_model" type="text" class="form-control" placeholder="Ex: Supra">
+                </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Country</label>
+                    <div class="form-group">
+                        <input name="_country" type="text" class="form-control" placeholder="Ex: Japan">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Horse Power</label>
+                    <div class="form-group">
+                        <input name="_hp" type="text" class="form-control" placeholder="Ex: 270 hp @7100 RPM">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Torque</label>
+                    <div class="form-group">
+                        <input name="_torque" type="text" class="form-control" placeholder="Ex: 210 lbs.-ft. (29.0 kg-m) @5300 RPM">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Displacement</label>
+                    <div class="form-group">
+                        <input name="_displacement" type="text" class="form-control" placeholder="Ex: 2977cc">
+                    </div>
+                </div>
+            </div>                  
+        </div>
+
+        <!-- Database -->
+        <div class="card-header">
+          <h4 class="text-center">Database Data</h4><hr>
+        </div> 
+        
+        <div class="card-body">                    
+          <div class="row">
+            
+            <div class="col-sm-12">
+              <label>Car Photo</label>
+              <div class="form-group">
+                <input type="file" name="car_photo">
+              </div>
+              </div>
+
+              <div class="col-sm-12">
+              <label>Car Tagline</label>
+              <div class="form-group">
+                  <input name="car_headline" type="text" class="form-control" placeholder="Ex: The Porsche 911 isn’t just a car. It’s car history.">
+              </div>
+              </div>
+              <div class="col-sm-12">
+              <label>Car Description</label>
+              <div class="form-group">
+                  <input name="car_description" type="text" class="form-control" placeholder="Ex: The Porsche 911 has undergone a major update for the 2017 model year with an all-new turbocharged engine, standard active dampers, new styling with improved aerodynamics, new safety features, optional rear axle steering, and a new entertainment system.">
+              </div>
+              </div>              
+              <div class="col-sm-6">
+              <label>Car Price</label>
+              <div class="form-group">
+                  <input name="car_price" type="text" class="form-control" placeholder="Ex: 200">
+              </div>
+              </div>
+              <div class="col-sm-6">
+              <label>Car For Sale</label>
+              <div class="form-group">
+                <input name="car_forsale" type="checkbox" checked data-toggle="toggle">
+              </div>
+              </div>
+          </div>                  
+        </div>
+        <br>
+        <div class="card-footer text-center">
+          <input type="submit" class="btn btn-lg btn-primary btn-finish-submit" name="submit" value="Submit">    
+        </div>
+      </form>
+    </div>
+
+    
+    <script src="{% static 'js/jquery-1.10.2.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="{% static 'js/hipster-cards.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.1/masonry.pkgd.min.js"></script>
+
+  </body>
+
+</html>
