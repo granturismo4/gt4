@@ -27,7 +27,7 @@ class RPC:
         return response
 
     def rpc_call(self, method, params):
-        icon_service = IconService(HTTPProvider(RPC.LOCALHOST))
+        icon_service = IconService(HTTPProvider(RPC.TESTNET))
         call_builder = CallBuilder() \
             .to(self._to_contract) \
             .method(method) \
@@ -42,7 +42,7 @@ class RPC:
 
         wallet = KeyWallet.load("/home/gt4/SCORE/y1keystore", "@icon123")        
 
-        icon_service = IconService(HTTPProvider(RPC.LOCALHOST))
+        icon_service = IconService(HTTPProvider(RPC.TESTNET))
         transaction = CallTransactionBuilder() \
             .from_(wallet.get_address()) \
             .to(self._to_contract) \
