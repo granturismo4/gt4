@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from market.rpc import RPC
 from iconsdk.exception import JSONRPCException
-from market.models import Cars
+from market.models import Cars, Users
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import HttpResponse
+import json
 
 def garage_index(request, wallet):
 
@@ -32,9 +34,12 @@ def garage_index(request, wallet):
 
         car_list.append(car)
 
+    user = Users.objects.filter(user_wallet=wallet).first()
+
     context = {}
     context["wallet"] = wallet
     context["car_list"] = car_list
+    context["user"] = user
 
     return render(request, 'garage/garage_index.html', context)
 
@@ -64,3 +69,20 @@ def garage_sell(request, car_id):
         context["car"] = car
         context["wallet_address"] = request.session["wallet_address"]
         return render(request, 'garage/garage_sell.html', context)
+
+
+def upgrade_car(request, np, car_id):
+    print("substract from powerpoint: "+str(np))
+    #print("add hp: "+str(ah))
+    #return redirect("https://google.com")
+    
+    u = Users.objects.get(user_wallet=request.session["wallet_address"])    
+    u.user_powerpoint = u.user_powerpoint - np
+    u.save()
+
+    c = Cars.objects.get(car_id=car_id)
+    c.car_power = c.car_power + 1
+    c.save()
+
+    return HttpResponse(json.dumps({'wallet_address': request.session['wallet_address']}), content_type="applicaiton/json")
+

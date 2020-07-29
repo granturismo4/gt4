@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from . import rpc
 from iconsdk.exception import JSONRPCException
-from .models import Cars
+from .models import Cars, Users
 from django.http import HttpResponse
 import json
 import datetime
@@ -11,6 +11,7 @@ from django.urls import reverse
 
 def set_wallet_session(request, wallet_address):
     request.session['wallet_address'] = wallet_address
+    Users.objects.update_or_create(user_wallet=wallet_address)
     return HttpResponse(json.dumps({'wallet_address': request.session['wallet_address']}), content_type="applicaiton/json")
 
 

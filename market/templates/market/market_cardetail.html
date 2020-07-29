@@ -171,6 +171,18 @@
       .card .header {
         min-height: 400px!important;
       }
+
+      .badgep {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 999;
+      }
+
+      .label-rank {
+        background-color: rgba(255, 0, 0, 0.7);
+      }
+
     </style>
   </head>
   <body>
@@ -183,6 +195,7 @@
 
       <div class="card" data-background="color" data-color="black">
         <div class="header">
+          <div class="badgep"><h6 class="label label-rank">Power {{ car.car_power }}</h6></div>          
           <img src="{{ car.car_photo.url }}" />
         </div>
 
@@ -292,12 +305,7 @@
           })
         );
       }
-
-      function sleep(s){
-        var now = new Date().getTime();
-        while(new Date().getTime() < now + s);
-      }
-
+      
       function make_transfer(){              
         $.ajax({
           url: "/market/make_transfer/",

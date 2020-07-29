@@ -51,6 +51,7 @@ def mint_car(request):
         car.car_photo = request.FILES["car_photo"]     
         car.car_headline = request.POST["car_headline"]
         car.car_description = request.POST["car_description"]
+        car.car_hp = request.POST["car_hp"]
         car.car_price = request.POST["car_price"]
         car.car_forsale = request.POST["car_forsale"]
         car.car_boughtat = datetime.datetime.now()

@@ -175,6 +175,18 @@
       .custom:hover {
         text-decoration: underline;
       }
+
+      .badgep {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 999;
+      }
+
+      .label-rank {
+        background-color: rgba(255, 0, 0, 0.7);
+      }
+
     </style>
   </head>
   <body>
@@ -214,13 +226,21 @@
           <div class="card-box col-md-6 col-sm-6">
             <a href="{% url 'market_cardetail' car.car_id %}">
               <div class="card text-center" data-background="image" data-src="{{ car.car_photo.url}}">
-                <h4 class="title title-modern">{{ car.car_year_name }}</h4>
+                
+                  <div class="badgep"><h6 class="label label-rank">Power {{ car.car_power }}</h6></div>
+                  <h4 class="title title-modern">{{ car.car_year_name }}</h4>
+                  
                 <div class="content">
                   <div class="price">                    
                     <h6>On Sale</h6>
                     <h4>{{ car.car_price }}<b class="currency"> ICX</b></h4>                                                         
                   </div>
                   <p class="description">{{ car.car_headline }}</p>
+                  <!--
+                  Rank: {{ car.car_rank }}<br>
+                  Exp: {{ car.car_exp }}<br>
+                  Power: {{ car.car_power }}
+                  -->
                 </div>
                 <div class="filter"></div>
                 <div class="footer btn-center">

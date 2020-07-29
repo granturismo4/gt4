@@ -226,9 +226,22 @@
       .card {
         background-color: transparent;
       }
+
+      .badgep {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 999;
+      }
+
+      .label-rank {
+        background-color: rgba(255, 0, 0, 0.7);
+      }
+
     </style>
   </head>
   <body>
+    {% csrf_token %}
     <div class="wrapper">
       <div class="logo-container">
         <br />
@@ -252,11 +265,13 @@
 
                 <div class="flip-card">
                   <div class="flip-card-inner">
-                    <div class="flip-card-front">                                  
+                    <div class="flip-card-front">  
+                                                       
                       <img src="{{ car.car_photo.url }}">
                       <div class="text-center" style="font-size: 18px; font-weight: bold; color: rgba(255,255,255,0.9); padding: 20px;">{{ car.car_year_name }}  </div>
                     </div>
                     <div class="flip-card-back">
+                      <div class="badgep"><h6 class="label label-rank">Power {{ car.car_power }}</h6></div> 
                       <h4>Facotry Specs</h4>
                       <b>Manufacturer:</b> {{ car.car_onchain.manufacturer }}
                       <br />
@@ -271,27 +286,16 @@
                       <b>Torque:</b> {{ car.car_onchain.torque }}
                       <br />
                       <b>Displacement:</b> {{ car.car_onchain.displacement }}
-                      <br /><br>
+                      <br /><br>                      
+                      <a href="javascript:upgrade_car({{ user.user_powerpoint }}, {{ car.car_power }}, {{ car.car_id }});" class="btn btn-success btn-fill btn-round">Upgrade</a>
                       <a href="{% url 'garage_sell' car.car_id %}" class="btn btn-danger btn-fill btn-round">List for Sale</a>
+                      <br>
+                      <br>
+                      <span> Current HP: {{ car.car_hp }} | Next Upgrade: <span id="next_hp"></span>> HP | Cost: <span id="power_cost"></span> power points </span>                                            
                     </div>
                   </div>
                 </div>  
-                <!--
-                <div class="social-line social-line-visible" style="height:30px; font-weight: bold; color:#ffffff; background-color: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
-                  <div class="text-center">{{ car.car_year_name }}  </div>
-                </div>
-                -->
               </div>              
-
-              <!--
-              <div class="content text-center">                
-                <h6 class="category">{{ car.car_year_name }}</h6>
-                <h4 class="title">{{ car.car_headline }}</h4>
-                <p class="description">{{ car.car_description }}</p>
-                  <b>Operator: </b>{{ car_operator }}                
-              </div>
-              -->
-
             </div>
           </div>
           {% endfor %}
@@ -342,6 +346,79 @@
           }
         },
       };
+
+      function upgrade_car(powerpoint, level, car_id) {        
+        np = needed_powerpoint(level+1);        
+        if (powerpoint <= np){
+          alert("Not enough power points!");
+          return;
+        }            
+        
+        $.ajax({
+          url: "/garage/upgrade_car/" + np + "/" + car_id,
+          type: "POST",
+          data: { csrfmiddlewaretoken: document.getElementsByName("csrfmiddlewaretoken")[0].value },
+          dataType: "json",
+          success: function (data) {
+            console.log(data);
+          },
+          error: function (message) {
+            console.log(message.responseText);
+          },
+        });        
+        
+      }
+
+      function added_hp(to_level){
+        switch(to_level) {
+          case 1:
+            return 10;
+          case 2:
+            return 20;          
+          case 3:
+            return 30; 
+          case 4:
+            return 50;
+          case 5:
+            return 80;          
+          case 6:
+            return 130; 
+          case 7:
+            return 210;
+          case 8:
+            return 240;          
+          case 9:
+            return 550;                                  
+          default:
+            break;
+        }
+      }
+
+      function needed_powerpoint(to_level){
+        switch(to_level) {
+          case 1:
+            return 10;
+          case 2:
+            return 20;          
+          case 3:
+            return 35; 
+          case 4:
+            return 75;
+          case 5:
+            return 140;          
+          case 6:
+            return 290; 
+          case 7:
+            return 480;
+          case 8:
+            return 800;          
+          case 9:
+            return 1250;                                  
+          default:
+            break;
+        }
+      }
+
     </script>
 
     <script>
