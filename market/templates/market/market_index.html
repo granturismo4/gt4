@@ -117,7 +117,7 @@
         overflow: hidden;
         border-radius: 50%;
         border: 1px solid #333333;
-        width: 60px;
+        width: 44px;
         float: left;
       }
       .logo-container .brand {
@@ -127,7 +127,6 @@
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         float: left;
         margin-left: 10px;
-        margin-top: 10px;
         width: 60px;
       }
       .hipster-container {
@@ -184,11 +183,9 @@
 
       <!-- log in -->
       <div class="logo-container">
-        <div class="logo">
-          <a href="javascript:iconexlogin();" class="nav-link" style="margin-top: 0.6em;">
-            <div id="prelogin" {% if wallet_address != "null" %} style="display:none;" {% endif %}><img src="{% static 'img/login.png' %}" /></div>
-            <div id="afterlogin" {% if wallet_address == "null" %} style="display:none;" {% endif %}><img src="{% static 'img/carlogo.png' %}" /></div>
-          </a>
+        <div class="logo">          
+            <div id="prelogin" {% if wallet_address != "null" %} style="display:none;" {% endif %}><img src="{% static 'img/login.png' %}" style="width:40px; height:40px;" /></div>
+            <div id="afterlogin" {% if wallet_address == "null" %} style="display:none;" {% endif %}><img src="{% static 'img/carlogo.png' %}" style="width:40px; height:40px;" /></div>          
         </div>
         <div class="brand">
           <div id="wallet">            
