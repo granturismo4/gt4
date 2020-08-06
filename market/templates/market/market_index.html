@@ -205,6 +205,8 @@
               <a class="custom" href="javascript:iconexlogin();">Login</a>
             </div>
             <div id="afterlogin_link" {% if wallet_address == "null" %} style="display:none;" {% endif %}>
+              <a id="playerprofile" href="../playerprofile/{{ wallet_address }}" class="custom">My Profile</a>
+              <br />              
               <a id="garage_address" href="../garage/{{ wallet_address }}" class="custom">My Garage</a>
               <br />
               <a href="javascript:logout();" class="custom">Logout</a>
@@ -250,6 +252,7 @@
             </a>
           </div>
           {% endfor %}
+          
         </div>
       </div>
     </div>

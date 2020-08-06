@@ -50,7 +50,7 @@ def market_cardetail(request, id):
     except JSONRPCException as e:
         print(str(e.message))
 
-    icx_usd = int(price, 0) / int(multiplier, 0)
+    icx_usd = int(price, 0) / int(multiplier, 0)    
 
     context = {}
     context["car_id"] = id

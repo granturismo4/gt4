@@ -40,7 +40,8 @@ class RPC:
 
     def rpc_call_transaction(self, method, params):
 
-        wallet = KeyWallet.load("/home/gt4/SCORE/y1keystore", "@icon123")        
+        #wallet = KeyWallet.load("/home/gt4/SCORE/y1keystore", "@icon123")  
+        wallet = KeyWallet.load("./SCORE/y1keystore", "@icon123")        
 
         icon_service = IconService(HTTPProvider(RPC.TESTNET))
         transaction = CallTransactionBuilder() \

@@ -235,7 +235,7 @@
           <!-- style="color: #05ae0e;" -->
           <span id="loggedin" {% if wallet_address == "null" or wallet_address == car_owner %} style="display:none;" {% endif %}>
           <a href="javascript:buy_car();" class="btn btn-success btn-round btn-lg">
-            Buy Now for {{ car.car_price }} ICX (${{ car.car_price|div:icx_usd|floatformat:"2" }} USD)
+            Buy Now for {{ car.car_price }} ICX (${{ car.car_price|mul:icx_usd|floatformat:"2" }} USD)
           </a>
         </span>
           

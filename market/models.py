@@ -27,6 +27,7 @@ class Users(models.Model):
 
     user_wallet = models.CharField(max_length=42, default='hx0000000000000000000000000000000000000000')
     user_powerpoint = models.IntegerField(default=500)
+    user_nickname = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return self.user_wallet

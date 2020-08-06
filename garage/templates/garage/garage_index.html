@@ -1,4 +1,5 @@
 {% load static %}
+{% load mathfilters %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -239,6 +240,62 @@
       }
 
     </style>
+
+    <script>
+      function added_hp(level){        
+        to_level = level + 1;
+        switch(to_level) {
+          case 0:
+            return 0;
+          case 1:
+            return 10;
+          case 2:
+            return 20;          
+          case 3:
+            return 30; 
+          case 4:
+            return 50;
+          case 5:
+            return 80;          
+          case 6:
+            return 130; 
+          case 7:
+            return 210;
+          case 8:
+            return 240;          
+          case 9:
+            return 550;                                  
+          default:
+            break;
+        }
+      }
+
+      function needed_powerpoint(level){
+        to_level = level + 1;
+        switch(to_level) {
+          case 1:
+            return 10;
+          case 2:
+            return 20;          
+          case 3:
+            return 35; 
+          case 4:
+            return 75;
+          case 5:
+            return 140;          
+          case 6:
+            return 290; 
+          case 7:
+            return 480;
+          case 8:
+            return 800;          
+          case 9:
+            return 1250;                                  
+          default:
+            break;
+        }
+      }
+    </script>
   </head>
   <body>
     {% csrf_token %}
@@ -291,7 +348,10 @@
                       <a href="{% url 'garage_sell' car.car_id %}" class="btn btn-danger btn-fill btn-round">List for Sale</a>
                       <br>
                       <br>
-                      <span> Current HP: {{ car.car_hp }} | Next Upgrade: <span id="next_hp"></span>> HP | Cost: <span id="power_cost"></span> power points </span>                                            
+                      <span> Current HP: <span style="color:seagreen">{{ car.car_hp }} (+<script>document.write(added_hp({{ car.car_power|sub:1 }}));</script>)</span>
+                        Next Upgrade: <span style="color:seagreen">+<script>document.write(added_hp({{ car.car_power }}));</script> HP</span>
+                        Cost: <span style="color:orangered"><script>document.write(needed_powerpoint({{ car.car_power }}));</script> Power Points</span></span><br>
+                        Available Balance: <span style="color:seagreen">{{ user.user_powerpoint }} Power Points</span>                                          
                     </div>
                   </div>
                 </div>  
@@ -299,6 +359,7 @@
             </div>
           </div>
           {% endfor %}
+          
         </div>
       </div>
     </div>
@@ -348,11 +409,15 @@
       };
 
       function upgrade_car(powerpoint, level, car_id) {        
-        np = needed_powerpoint(level+1);        
+        np = needed_powerpoint(level);        
         if (powerpoint <= np){
           alert("Not enough power points!");
           return;
-        }            
+        } 
+        if (level >= 9){
+          alert("Max level already!");
+          return;
+        }           
         
         $.ajax({
           url: "/garage/upgrade_car/" + np + "/" + car_id,
@@ -361,6 +426,7 @@
           dataType: "json",
           success: function (data) {
             console.log(data);
+            location.reload();
           },
           error: function (message) {
             console.log(message.responseText);
@@ -368,57 +434,6 @@
         });        
         
       }
-
-      function added_hp(to_level){
-        switch(to_level) {
-          case 1:
-            return 10;
-          case 2:
-            return 20;          
-          case 3:
-            return 30; 
-          case 4:
-            return 50;
-          case 5:
-            return 80;          
-          case 6:
-            return 130; 
-          case 7:
-            return 210;
-          case 8:
-            return 240;          
-          case 9:
-            return 550;                                  
-          default:
-            break;
-        }
-      }
-
-      function needed_powerpoint(to_level){
-        switch(to_level) {
-          case 1:
-            return 10;
-          case 2:
-            return 20;          
-          case 3:
-            return 35; 
-          case 4:
-            return 75;
-          case 5:
-            return 140;          
-          case 6:
-            return 290; 
-          case 7:
-            return 480;
-          case 8:
-            return 800;          
-          case 9:
-            return 1250;                                  
-          default:
-            break;
-        }
-      }
-
     </script>
 
     <script>
